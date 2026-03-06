@@ -6,10 +6,13 @@ Current implemented stage:
 
 - ESPHome firmware for ESP32-CAM
 - Home Assistant integration via ESPHome API
-- Flash LED on `GPIO4` exposed as a Home Assistant switch
-- Verified entity in Home Assistant: `switch.esp32_cam_flash_flash`
+- 4 GPIO switches exposed to Home Assistant:
+  - `GPIO4` (flash LED)
+  - `GPIO13`
+  - `GPIO14`
+  - `GPIO15`
 
-This repository is the base project that will be extended further into a multi-channel lamp controller.
+This repository is the working base for further lamp/automation features.
 
 ## Files
 
@@ -21,7 +24,11 @@ This repository is the base project that will be extended further into a multi-c
 ## Hardware
 
 - Board: ESP32-CAM (AI Thinker style pinout)
-- Current output: onboard flash LED on `GPIO4`
+- Current outputs:
+  - `GPIO4` - onboard flash LED
+  - `GPIO13` - Channel 1
+  - `GPIO14` - Channel 2
+  - `GPIO15` - Channel 3
 
 ## Current Home Assistant Setup
 
@@ -31,8 +38,12 @@ Current tested behavior:
 
 1. Device boots and joins Wi-Fi
 2. ESPHome API is available on port `6053`
-3. Home Assistant discovers the node and creates `switch.esp32_cam_flash_flash`
-4. Turning the switch on/off controls the onboard flash LED
+3. Home Assistant discovers/loads the node and creates 4 switch entities:
+   - `switch.esp32_cam_flash_flash_led_gpio4`
+   - `switch.esp32_cam_flash_channel_1_gpio13`
+   - `switch.esp32_cam_flash_channel_2_gpio14`
+   - `switch.esp32_cam_flash_channel_3_gpio15`
+4. All 4 switches are verified via `switch.turn_on` / `switch.turn_off`
 
 ## Local Setup
 
@@ -57,11 +68,16 @@ Current tested behavior:
 - Web UI enabled on port `80`
 - OTA enabled
 - Native API enabled
+- 4 switch outputs mapped to GPIO4/13/14/15
+
+## Pin Notes
+
+- `GPIO15` is a strapping pin on ESP32. Avoid adding strong external pull-up/pull-down on this line to prevent boot issues.
 
 ## Roadmap
 
-- Add external lamp output pin
-- Extend to 3-channel lamp control
+- Add safe power-stage examples (MOSFET/relay)
+- Optional migration from GPIO15 to another pin profile, if hardware constraints require it
 - Add cleaner Home Assistant dashboard controls
 - Split hardware profiles (flash-only vs external lamp)
 

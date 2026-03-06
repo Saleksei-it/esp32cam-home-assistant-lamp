@@ -28,7 +28,7 @@ web_server:
 
 switch:
   - platform: gpio
-    name: "Flash"
+    name: "Flash LED (GPIO4)"
     id: flash_led
     pin:
       number: GPIO4
@@ -36,3 +36,33 @@ switch:
       inverted: false
     restore_mode: ALWAYS_OFF
     icon: mdi:flashlight
+
+  - platform: gpio
+    name: "Channel 1 (GPIO13)"
+    id: channel_1
+    pin:
+      number: GPIO13
+      mode: OUTPUT
+      inverted: false
+    restore_mode: ALWAYS_OFF
+    icon: mdi:lightbulb
+
+  - platform: gpio
+    name: "Channel 2 (GPIO14)"
+    id: channel_2
+    pin:
+      number: GPIO14
+      mode: OUTPUT
+      inverted: false
+    restore_mode: ALWAYS_OFF
+    icon: mdi:lightbulb
+
+  - platform: gpio
+    name: "Channel 3 (GPIO15)"
+    id: channel_3
+    pin:
+      number: GPIO15
+      mode: OUTPUT
+      inverted: false
+    restore_mode: ALWAYS_OFF
+    icon: mdi:lightbulb
